@@ -2,6 +2,12 @@ require "bundler"
 Bundler.require
 
 require "sinatra/activerecord/rake"
+require 'rake/testtask'
+
+Rake::TestTask.new do |t|
+  t.libs << "test"
+  t.pattern = "test/**/*_test.rb"
+end
 
 namespace :sanitation do
   desc "Check line lengths & whitespace with Cane"

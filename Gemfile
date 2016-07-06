@@ -12,4 +12,8 @@ group :development, :test do
   gem 'capybara'
   gem 'launchy'
   gem 'rack-test'
+  gem 'database_cleaner'
+  gem 'test-unit'
+  gem 'rake'
+  gem 'pry'
 end
