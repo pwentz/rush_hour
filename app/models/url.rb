@@ -14,4 +14,20 @@ class Url < ActiveRecord::Base
   def average_response_time_per_site
     payload_requests.average_response_time
   end
+
+  def max_response_time_per_site
+    payload_requests.max_response_time
+  end
+
+  def min_response_time_per_site
+    payload_requests.min_response_time
+  end
+
+  def ordered_response_times
+    payload_requests.order(responded_in: :desc).pluck(:responded_in)
+  end
+
+  def http_verbs_by_site
+    require 'pry'; binding.pry
+  end
 end

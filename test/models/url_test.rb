@@ -20,10 +20,43 @@ class UrlTest < Minitest::Test
     assert_equal 2, Url.most_requested_to_least_requested.values.first
   end
 
-    def test_average_response_time_per_site
-      create_multiple_payloads(2)
+  def test_payload_max_response_time
+    create_payload
+    payload = PayloadRequest.create(url_id: 1, requested_at: "abcd", responded_in: "6",
+                                      referrer_id: 1, request_type_id: 1,
+                                      user_agent_id: 1, resolution_id: 1,
+                                      ip_address_id: 1)
 
-      assert_equal 0, .average_response_time_per_site("http://jumpstartlab.com", "/blog0")
-      assert_equal 1, .average_response_time_per_site("http://jumpstartlab.com", "/blog1")
-    end
+    assert_equal 6, Url.find(1).max_response_time_per_site
+  end
+
+  def test_payload_min_response_time
+    create_payload
+    payload = PayloadRequest.create(url_id: 1, requested_at: "abcd", responded_in: "6",
+                                      referrer_id: 1, request_type_id: 1,
+                                      user_agent_id: 1, resolution_id: 1,
+                                      ip_address_id: 1)
+
+    assert_equal 5, Url.find(1).min_response_time_per_site
+  end
+
+  def test_payload_avg_response_time
+    create_payload
+    payload = PayloadRequest.create(url_id: 1, requested_at: "abcd", responded_in: "35",
+                                      referrer_id: 1, request_type_id: 1,
+                                      user_agent_id: 1, resolution_id: 1,
+                                      ip_address_id: 1)
+
+    assert_equal 20, Url.find(1).average_response_time_per_site
+  end
+
+  def test_payload_avg_response_time
+    create_payload
+    payload = PayloadRequest.create(url_id: 1, requested_at: "abcd", responded_in: "35",
+                                      referrer_id: 1, request_type_id: 1,
+                                      user_agent_id: 1, resolution_id: 1,
+                                      ip_address_id: 1)
+
+    Url.find(1).http_verbs_by_site
+  end
 end
