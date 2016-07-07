@@ -27,7 +27,7 @@ class UrlTest < Minitest::Test
                                       user_agent_id: 1, resolution_id: 1,
                                       ip_address_id: 1)
 
-    assert_equal 6, Url.find(1).max_response_time_per_site
+    assert_equal 6, Url.find(1).max_response_time
   end
 
   def test_payload_min_response_time
@@ -37,7 +37,7 @@ class UrlTest < Minitest::Test
                                       user_agent_id: 1, resolution_id: 1,
                                       ip_address_id: 1)
 
-    assert_equal 5, Url.find(1).min_response_time_per_site
+    assert_equal 5, Url.find(1).min_response_time
   end
 
   def test_payload_avg_response_time
@@ -47,7 +47,7 @@ class UrlTest < Minitest::Test
                                       user_agent_id: 1, resolution_id: 1,
                                       ip_address_id: 1)
 
-    assert_equal 20, Url.find(1).average_response_time_per_site
+    assert_equal 20, Url.find(1).average_response_time
   end
 
   def test_payload_avg_response_time
@@ -57,6 +57,6 @@ class UrlTest < Minitest::Test
                                       user_agent_id: 1, resolution_id: 1,
                                       ip_address_id: 1)
 
-    Url.find(1).http_verbs_by_site
+    Url.find(1).http_verbs
   end
 end
