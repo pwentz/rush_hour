@@ -32,4 +32,11 @@ class PayloadRequestTest < Minitest::Test
 
     assert_equal 0, PayloadRequest.min_response_time
   end
+
+  def test_average_response_time_per_site
+    create_multiple_payloads(2)
+
+    assert_equal 0, payload_requests.average_response_time_per_site("http://jumpstartlab.com", "/blog0")
+    assert_equal 1, payload_requests.average_response_time_per_site("http://jumpstartlab.com", "/blog1")
+  end
 end
