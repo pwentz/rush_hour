@@ -3,16 +3,33 @@ require_relative '../test_helper'
 class PayloadRequestTest < Minitest::Test
   include TestHelpers
 
-
-
   def test_no_object_creation_on_blank_fields
-    attempt = PayloadRequest.create(requested_at: "19394")
-    refute attempt.valid?
+    attempt = PayloadRequest.new(:responded_in => "5")
+    refute attempt.save
   end
 
   def test_object_creation_on_valid_fields
-    create_payload
+    create_multiple_payloads(2)
 
     assert PayloadRequest.find(1).valid?
+    assert PayloadRequest.find(2).valid?
+  end
+
+  def test_average_response_time
+    create_multiple_payloads(3)
+
+    assert_equal 1, PayloadRequest.average_response_time
+  end
+
+  def test_max_response_time
+    create_multiple_payloads(10)
+
+    assert_equal 9, PayloadRequest.max_response_time
+  end
+
+  def test_min_response_time
+    create_multiple_payloads(10)
+
+    assert_equal 0, PayloadRequest.min_response_time
   end
 end
