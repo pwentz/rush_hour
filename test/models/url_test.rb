@@ -1,11 +1,12 @@
 require_relative '../test_helper'
 
 class UrlTest < Minitest::Test
+  include TestHelpers
+  
   def test_ip_address_has_payloads
-    payload = PayloadRequest.create(requested_at: "fsdfd", responded_in: "sdsa")
-    url = Url.create(root_url: "http://www.aslds.com", path: "/hey")
+    create_payload
 
-    url.payload_requests << payload
-    assert_equal "fsdfd", url.payload_requests.first.requested_at
+    assert_equal "http://jumpstartlab.com/", Url.all.first.root_url
+    assert_equal "/blog", Url.all.first.path
   end
 end
