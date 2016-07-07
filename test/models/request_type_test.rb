@@ -1,9 +1,11 @@
 require_relative '../test_helper'
 
-class RequestTypesTest < Minitest::Test
+class RequestTypeTest < Minitest::Test
   include TestHelpers
+
   def test_request_types_have_relationship_with_payload
     create_payload
+
     assert_equal "GET", RequestType.all.first.method_name
   end
 
@@ -21,6 +23,6 @@ class RequestTypesTest < Minitest::Test
     create_payload
     create_multiple_payloads(3)
 
-    assert_equal ["GET", "POST"], RequestType.http_verbs
+    assert_equal ["POST", "GET"], RequestType.http_verbs
   end
 end
