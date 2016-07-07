@@ -3,7 +3,11 @@ class UserAgent < ActiveRecord::Base
   validates :operating_system, presence: true
   validates :browser, presence: true
 
-  def retrieve_browser
-    # implement this method :)
+  def self.browser_list
+      UserAgent.pluck(:browser).uniq
+  end
+  
+  def self.operating_system_list
+      UserAgent.pluck(:operating_system).uniq
   end
 end

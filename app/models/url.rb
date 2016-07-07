@@ -10,4 +10,8 @@ class Url < ActiveRecord::Base
       end
     end.sort_by{|k,v| -v }.to_h
   end
+
+  def average_response_time_per_site
+    payload_requests.average_response_time
+  end
 end
