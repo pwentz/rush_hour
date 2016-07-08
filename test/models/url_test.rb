@@ -22,7 +22,7 @@ class UrlTest < Minitest::Test
 
   def test_payload_max_response_time
     create_payload
-    payload = PayloadRequest.create(url_id: 1, requested_at: "abcd", responded_in: "6",
+    PayloadRequest.create(url_id: 1, requested_at: "abcd", responded_in: "6",
                                       referrer_id: 1, request_type_id: 1,
                                       user_agent_id: 1, resolution_id: 1,
                                       ip_address_id: 1)
@@ -32,7 +32,7 @@ class UrlTest < Minitest::Test
 
   def test_payload_min_response_time
     create_payload
-    payload = PayloadRequest.create(url_id: 1, requested_at: "abcd", responded_in: "6",
+    PayloadRequest.create(url_id: 1, requested_at: "abcd", responded_in: "6",
                                       referrer_id: 1, request_type_id: 1,
                                       user_agent_id: 1, resolution_id: 1,
                                       ip_address_id: 1)
@@ -42,7 +42,7 @@ class UrlTest < Minitest::Test
 
   def test_payload_avg_response_time
     create_payload
-    payload = PayloadRequest.create(url_id: 1, requested_at: "abcd", responded_in: "35",
+    PayloadRequest.create(url_id: 1, requested_at: "abcd", responded_in: "35",
                                       referrer_id: 1, request_type_id: 1,
                                       user_agent_id: 1, resolution_id: 1,
                                       ip_address_id: 1)
@@ -53,7 +53,7 @@ class UrlTest < Minitest::Test
   def test_http_verbs_by_url
     create_payload
     RequestType.create(:method_name => "POST")
-    payload = PayloadRequest.create(url_id: 1, requested_at: "abcd", responded_in: "35",
+    PayloadRequest.create(url_id: 1, requested_at: "abcd", responded_in: "35",
                                       referrer_id: 1, request_type_id: 2,
                                       user_agent_id: 1, resolution_id: 1,
                                       ip_address_id: 1)
