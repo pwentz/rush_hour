@@ -6,8 +6,8 @@ class Resolution < ActiveRecord::Base
   has_many  :urls,          through: :payload_requests
   has_many  :user_agents,   through: :payload_requests
 
-  validates :width,   presence: true, uniqueness: true
-  validates :height,  presence: true, uniqueness: true
+  validates :width,   presence: true, uniqueness: {:scope => :height}
+  validates :height,  presence: true, uniqueness: {:scope => :width}
 
   def self.resolution_list
     all.map { |i| "#{i.width} x #{i.height}"}.uniq

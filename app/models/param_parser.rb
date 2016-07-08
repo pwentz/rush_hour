@@ -14,13 +14,13 @@ module ParamParser
     payload = payload_parse(params)
 
     url         = Url.create(split_url(payload[:url]))
-    rtype       = RequestType.create(method_name: "GET")
-    resolution  = Resolution.create(width: "1920", height: "1280")
-    referrer    = Referrer.create(referrer: "http://jumpstartlab.com")
-    user_agent  = UserAgent.create(operating_system: "OSX 10.8.2", browser: "Chrome")
-    ip          = IPAddress.create(ip_address: "63.29.38.211")
+    rtype       = RequestType.find_or_create(method_name: "GET")
+    resolution  = Resolution.find_or_create(width: "1920", height: "1280")
+    referrer    = Referrer.find_or_create(referrer: "http://jumpstartlab.com")
+    user_agent  = UserAgent.find_or_create(operating_system: "OSX 10.8.2", browser: "Chrome")
+    ip          = IPAddress.find_or_create(ip_address: "63.29.38.211")
 
-    PayloadRequest.create(url_id: url.id,
+    PayloadRequest.find_or_create(url_id: url.id,
                           requested_at: "abcd",
                           responded_in: "5",
                           referrer_id: referrer.id,

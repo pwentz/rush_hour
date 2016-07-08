@@ -37,11 +37,11 @@ module TestHelpers
     rtype       = RequestType.create(method_name: "GET")
     resolution  = Resolution.create(width: "1920", height: "1280")
     referrer    = Referrer.create(referrer: "http://jumpstartlab.com")
-    user_agent  = UserAgent.create(operating_system: "OSX 10.8.2", browser: "Chrome")
+    user_agent  = UserAgent.create(operating_system: "OS X 10.8.2", browser: "Chrome")
     ip          = IPAddress.create(ip_address: "63.29.38.211")
 
     PayloadRequest.create(url_id: url.id,
-                                        requested_at: "abcd",
+                                        requested_at: Time.now,
                                         responded_in: "5",
                                         referrer_id: referrer.id,
                                         request_type_id: rtype.id,
