@@ -2,7 +2,8 @@ module RushHour
   class Server < Sinatra::Base
 
     post '/sources' do
-      client = Client.new(params[:client])
+      require 'pry'; binding.pry
+      client = Client.new(params)
       if Client.find_by(:identifier => client.identifier)
         status 403
         body 'Client already exists!'
