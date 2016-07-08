@@ -28,7 +28,29 @@ class Url < ActiveRecord::Base
     payload_requests.order(responded_in: :desc).pluck(:responded_in)
   end
 
-  # def http_verbs
-  #   binding.pry
-  # end
+  def http_verbs
+    payload_requests.map do |payload|
+      RequestType.find(payload.request_type_id).method_name
+    end.uniq
+  end
+
+  def top_referrers
+    #AR .order or .where methods for refactoring
+    Url.find(1).payload_requests.reduce({}) do |result, payload|
+      result.merge!(Referrer.find(payload.referrer_id).referrer => 1) do |key, old, new|
+        old + new
+      end
+    end.sort_by{|url, number| -number}[0..2].to_h
+  end
+
+  def top_user_agents
+    require 'pry'; binding.pry
+    #AR .order or .where methods for refactoring
+    Url.find(1).payload_requests.reduce({}) do |result, payload|
+      result.merge!(UserAgent.find(payload.user_agent_id).operating_system + " " +
+                    UserAgent.find(payload.user_agent_id).browser => 1) do |key, old, new|
+        old + new
+      end
+    end.sort_by{|url, number| -number}[0..2].to_h
+  end
 end
