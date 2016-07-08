@@ -8,7 +8,7 @@ class PayloadRequest < ActiveRecord::Base
   belongs_to  :user_agent
 
 
-  validates :requested_at, presence: true
+  validates :requested_at, presence: true, uniqueness: true
   validates :responded_in, presence: true
 
   def self.average_response_time

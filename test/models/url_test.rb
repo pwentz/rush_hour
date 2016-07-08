@@ -82,7 +82,7 @@ class UrlTest < Minitest::Test
 
 
     assert_equal 3, Url.find(1).top_referrers.count
-    assert_equal "www.google.com", Url.find(1).top_referrers.first.first
+    assert_equal "www.google.com", Url.find(1).top_referrers.first
   end
 
   def test_top_user_agents
@@ -105,6 +105,6 @@ class UrlTest < Minitest::Test
                                       ip_address_id: 1)
 
     assert_equal 3, Url.find(1).top_user_agents.count
-    assert_equal "OS X 10.8.2 Chrome", Url.find(1).top_user_agents.first.first
+    assert_equal "OS X 10.8.2 Chrome", Url.find(1).top_user_agents.first
   end
 end

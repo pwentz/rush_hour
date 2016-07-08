@@ -31,6 +31,7 @@ module ParamParser
   end
 
   def split_url(url)
+    # refactor?
     {:root_url => url.split("/")[0..2].join("/"), :path => "/" + url.split("/").last}
   end
 end
