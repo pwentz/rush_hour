@@ -1,4 +1,4 @@
-require_relative '../models/camel_to_snake_case'
+require_relative '../models/param_parser'
 
 module RushHour
   class Server < Sinatra::Base

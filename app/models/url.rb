@@ -34,6 +34,7 @@ class Url < ActiveRecord::Base
   end
 
   def http_verbs
+    require 'pry', binding.pry
     # payload_requests.map do |payload|
     #   RequestType.find(payload.request_type_id).method_name
     # end.uniq
