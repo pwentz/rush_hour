@@ -1,13 +1,13 @@
 class Url < ActiveRecord::Base
   has_many  :payload_requests
-  has_many  :ip_addresses, through: :payload_requests
-  has_many  :referrers, through: :payload_requests
+  has_many  :ip_addresses,  through: :payload_requests
+  has_many  :referrers,     through: :payload_requests
   has_many  :request_types, through: :payload_requests
-  has_many  :resolutions, through: :payload_requests
-  has_many  :user_agents, through: :payload_requests
+  has_many  :resolutions,   through: :payload_requests
+  has_many  :user_agents,   through: :payload_requests
 
-  validates :root_url, presence: true
-  validates :path, presence: true
+  validates :root_url,  presence: true, uniqueness: true
+  validates :path,      presence: true, uniqueness: true
 
   def self.most_requested_to_least_requested
     all.reduce({}) do |result, url|
@@ -34,29 +34,25 @@ class Url < ActiveRecord::Base
   end
 
   def http_verbs
-    require 'pry', binding.pry
-    # payload_requests.map do |payload|
-    #   RequestType.find(payload.request_type_id).method_name
-    # end.uniq
-    request_types.uniq
+    request_types.pluck(:method_name).uniq
   end
 
   def top_referrers
-    #AR .order or .where methods for refactoring
-    Url.find(1).payload_requests.reduce({}) do |result, payload|
-      result.merge!(Referrer.find(payload.referrer_id).referrer => 1) do |key, old, new|
-        old + new
-      end
-    end.sort_by{|url, number| -number}[0..2].to_h
+    find_top_three(referrers, :referrer).keys
   end
 
   def top_user_agents
-    #AR .order or .where methods for refactoring
-    Url.find(1).payload_requests.reduce({}) do |result, payload|
-      result.merge!(UserAgent.find(payload.user_agent_id).operating_system + " " +
-                    UserAgent.find(payload.user_agent_id).browser => 1) do |key, old, new|
-        old + new
-      end
-    end.sort_by{|url, number| -number}[0..2].to_h
+    # Url.find(1).payload_requests.reduce({}) do |result, payload|
+    #   result.merge!(UserAgent.find(payload.user_agent_id).operating_system + " " +
+    #                 UserAgent.find(payload.user_agent_id).browser => 1) do |key, old, new|
+    #     old + new
+    #   end
+    # end.sort_by{|url, number| -number}[0..2].to_h
+    require 'pry', binding.pry
+    user_agents.group(:operating_system, :browser).count.sort_by { |k,v| -v }.to_h.keys
+  end
+
+  def find_top_three(table, attribute)
+    table.group(attribute).count.sort_by { |k,v| -v }.to_h
   end
 end

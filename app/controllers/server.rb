@@ -3,6 +3,7 @@ require_relative '../models/param_parser'
 module RushHour
   class Server < Sinatra::Base
     include ParamParser
+    # include ClientValidator
 
     post '/sources' do
       client = Client.find_or_create(camel_to_snake_case(params))
