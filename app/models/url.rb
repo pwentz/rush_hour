@@ -1,5 +1,10 @@
 class Url < ActiveRecord::Base
   has_many  :payload_requests
+  has_many  :ip_addresses, through: :payload_requests
+  has_many  :referrers, through: :payload_requests
+  has_many  :request_types, through: :payload_requests
+  has_many  :resolutions, through: :payload_requests
+  has_many  :user_agents, through: :payload_requests
 
   validates :root_url, presence: true
   validates :path, presence: true
@@ -29,9 +34,10 @@ class Url < ActiveRecord::Base
   end
 
   def http_verbs
-    payload_requests.map do |payload|
-      RequestType.find(payload.request_type_id).method_name
-    end.uniq
+    # payload_requests.map do |payload|
+    #   RequestType.find(payload.request_type_id).method_name
+    # end.uniq
+    request_types.uniq
   end
 
   def top_referrers
