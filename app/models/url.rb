@@ -44,7 +44,6 @@ class Url < ActiveRecord::Base
   end
 
   def top_user_agents
-    require 'pry'; binding.pry
     #AR .order or .where methods for refactoring
     Url.find(1).payload_requests.reduce({}) do |result, payload|
       result.merge!(UserAgent.find(payload.user_agent_id).operating_system + " " +

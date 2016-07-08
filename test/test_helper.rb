@@ -16,6 +16,11 @@ Capybara.app = RushHour::Server
 DatabaseCleaner.strategy = :truncation
 
 module TestHelpers
+  include Rack::Test::Methods
+
+  def app
+    RushHour::Server
+  end
 
   def setup
     DatabaseCleaner.start
@@ -43,6 +48,7 @@ module TestHelpers
                                         user_agent_id: user_agent.id,
                                         resolution_id: resolution.id,
                                         ip_address_id: ip.id)
+    
   end
 
   def create_multiple_payloads(number)
