@@ -16,6 +16,6 @@ group :development, :test do
   gem 'test-unit'
   gem 'rake'
   gem 'pry'
-  gem 'useragent'
+  gem 'user_agent_parser'
   gem 'faker'
 end
