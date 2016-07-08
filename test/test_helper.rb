@@ -40,7 +40,7 @@ module TestHelpers
     user_agent  = UserAgent.create(operating_system: "OSX 10.8.2", browser: "Chrome")
     ip          = IPAddress.create(ip_address: "63.29.38.211")
 
-    payload     = PayloadRequest.create(url_id: url.id,
+    PayloadRequest.create(url_id: url.id,
                                         requested_at: "abcd",
                                         responded_in: "5",
                                         referrer_id: referrer.id,
@@ -48,7 +48,7 @@ module TestHelpers
                                         user_agent_id: user_agent.id,
                                         resolution_id: resolution.id,
                                         ip_address_id: ip.id)
-    
+
   end
 
   def create_multiple_payloads(number)
@@ -60,7 +60,7 @@ module TestHelpers
       user_agent  = UserAgent.create(operating_system: "OSX 10.8.2#{i}", browser: "Chrome#{i}")
       ip          = IPAddress.create(ip_address: "63.29.38.211#{i}")
 
-      payload     = PayloadRequest.create(url_id: url.id,
+      PayloadRequest.create(url_id: url.id,
                                           requested_at: "abcd#{i}",
                                           responded_in: "#{i}",
                                           referrer_id: referrer.id,
