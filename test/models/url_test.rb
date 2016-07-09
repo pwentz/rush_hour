@@ -52,4 +52,24 @@ class UrlTest < Minitest::Test
     assert url_three.valid?
     assert_equal 3, Url.count
   end
+
+  def test_returns_list_of_urls_ordered_by_descending_frequency
+    Url.create(root_url: "http://jumpstartlab.com", path: "/blog")
+    Url.create(root_url: "http://mysite.com", path: "/blog")
+    Url.create(root_url: "http://jumpstartlab.com", path: "/store")
+    PayloadRequest.create(url_id: 1, requested_at: "2012-02-16 21:38:28 -0700",
+                            responded_in: 35, referrer_id: 1, request_type_id: 1,
+                            user_agent_id: 1, resolution_id: 1, ip_address_id: 1)
+    PayloadRequest.create(url_id: 1, requested_at: "2012-02-16 21:38:28 -0800",
+                            responded_in: 35, referrer_id: 1, request_type_id: 3,
+                            user_agent_id: 1, resolution_id: 2, ip_address_id: 2)
+    PayloadRequest.create(url_id: 2, requested_at: "2012-02-16 21:38:28 -0900",
+                            responded_in: 35, referrer_id: 2, request_type_id: 2,
+                            user_agent_id: 2, resolution_id: 3, ip_address_id: 2)
+    PayloadRequest.create(url_id: 3, requested_at: "2012-02-16 21:38:28 -1000",
+                            responded_in: 35, referrer_id: 3, request_type_id: 3,
+                            user_agent_id: 3, resolution_id: 3, ip_address_id: 3)
+                            
+    assert_equal "", Url.most_requested_to_least_requested
+  end
 end

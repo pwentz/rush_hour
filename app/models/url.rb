@@ -10,7 +10,6 @@ class Url < ActiveRecord::Base
   validates :path,      presence: true, uniqueness: {:scope => :root_url}
 
   def self.most_requested_to_least_requested
-    require "pry"; binding.pry
     all.reduce({}) do |result, url|
       result.merge!(url[:root_url] + url[:path] => 1) do |key, oldval, newval|
         oldval + newval

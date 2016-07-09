@@ -36,4 +36,17 @@ class RequestTypeTest < Minitest::Test
     assert_equal 1, RequestType.count
   end
 
+  def test_find_most_frequent_response_type
+    create_payload
+    create_multiple_payloads(2)
+
+    assert_equal "POST", RequestType.most_frequent_request_type
+  end
+
+  def test_can_retrieve_list_of_http_verbs
+    create_payload
+    create_multiple_payloads(1)
+
+    assert_equal ["GET", "POST"], RequestType.http_verbs
+  end
 end
