@@ -32,6 +32,7 @@ module ParamParser
                           user_agent_id: user_agent.id,
                           resolution_id: resolution.id,
                           ip_address_id: ip.id)
+    require 'pry'; binding.pry
   end
 
   def format_url(url)

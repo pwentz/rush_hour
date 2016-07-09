@@ -24,6 +24,7 @@ class PayloadRequest < ActiveRecord::Base
   end
 
   def self.most_frequent(id)
+    require 'pry'; binding.pry
     most_frequent_list(id).first.first
   end
 
