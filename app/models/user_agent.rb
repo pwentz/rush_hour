@@ -4,6 +4,9 @@ class UserAgent < ActiveRecord::Base
   validates :operating_system,  presence: true, uniqueness: {:scope => :browser}
   validates :browser,           presence: true, uniqueness: {:scope => :operating_system}
 
+  def self.validation_attempt
+  end
+
   def self.browser_list
       pluck(:browser)
   end

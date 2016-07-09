@@ -1,3 +1,4 @@
+require 'user_agent_parser'
 module ParamParser
 
   def camel_to_snake_case(params)
@@ -30,8 +31,16 @@ module ParamParser
                           ip_address_id: ip.id)
   end
 
-  def split_url(url)
+  def format_url(url)
     # refactor?
-    {:root_url => url.split("/")[0..2].join("/"), :path => "/" + url.split("/").last}
+    {:root_url => split_url(url)[0..2].join("/"), :path => "/" + split_url(url).last}
+  end
+
+  def split_url(url)
+    url.split("/")
+  end
+
+  def user_agent(user_agent)
+    UserAgentParser.parse(user_agent)
   end
 end
