@@ -8,7 +8,7 @@ class PayloadRequest < ActiveRecord::Base
   belongs_to  :user_agent
 
 
-  validates :requested_at, presence: true, uniqueness: true
+  validates :requested_at, presence: true, uniqueness: {:scope => :url_id}
   validates :responded_in, presence: true
 
   def self.average_response_time
@@ -24,7 +24,6 @@ class PayloadRequest < ActiveRecord::Base
   end
 
   def self.most_frequent(id)
-    require 'pry'; binding.pry
     most_frequent_list(id).first.first
   end
 
