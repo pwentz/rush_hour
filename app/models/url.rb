@@ -10,10 +10,8 @@ class Url < ActiveRecord::Base
   validates :path,      presence: true, uniqueness: {:scope => :root_url}
 
   def self.most_requested_to_least_requested
-    all.reduce({}) do |result, url|
-      result.merge!(url[:root_url] + url[:path] => 1) do |key, oldval, newval|
-        oldval + newval
-      end
+    PayloadRequest.group(:url_id).count.reduce({}) do |result, url|
+      result.merge!(Url.find(url.first).root_url + Url.find(url.first).path => url.last)
     end.sort_by{|k,v| -v }.to_h
   end
 
@@ -48,7 +46,6 @@ class Url < ActiveRecord::Base
     #     old + new
     #   end
     # end.sort_by{|url, number| -number}[0..2].to_h
-    require 'pry', binding.pry
     user_agents.group(:operating_system, :browser).count.sort_by { |k,v| -v }.to_h.keys
   end
 

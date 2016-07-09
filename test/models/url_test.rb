@@ -57,9 +57,6 @@ class UrlTest < Minitest::Test
     Url.create(root_url: "http://jumpstartlab.com", path: "/blog")
     Url.create(root_url: "http://mysite.com", path: "/blog")
     Url.create(root_url: "http://jumpstartlab.com", path: "/store")
-    PayloadRequest.create(url_id: 1, requested_at: "2012-02-16 21:38:28 -0700",
-                            responded_in: 35, referrer_id: 1, request_type_id: 1,
-                            user_agent_id: 1, resolution_id: 1, ip_address_id: 1)
     PayloadRequest.create(url_id: 1, requested_at: "2012-02-16 21:38:28 -0800",
                             responded_in: 35, referrer_id: 1, request_type_id: 3,
                             user_agent_id: 1, resolution_id: 2, ip_address_id: 2)
@@ -69,7 +66,12 @@ class UrlTest < Minitest::Test
     PayloadRequest.create(url_id: 3, requested_at: "2012-02-16 21:38:28 -1000",
                             responded_in: 35, referrer_id: 3, request_type_id: 3,
                             user_agent_id: 3, resolution_id: 3, ip_address_id: 3)
+    PayloadRequest.create(url_id: 1, requested_at: "2012-02-16 21:38:28 -0700",
+                            responded_in: 35, referrer_id: 1, request_type_id: 1,
+                            user_agent_id: 1, resolution_id: 1, ip_address_id: 1)
                             
+
+    require 'pry'; binding.pry
     assert_equal "", Url.most_requested_to_least_requested
   end
 end
