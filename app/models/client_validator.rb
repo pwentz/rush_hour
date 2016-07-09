@@ -1,14 +1,14 @@
-# module ClientValidator
-#
-#   client = Client.find_or_create(camel_to_snake_case(params))
-#   if client
-#     status 403
-#     body client.errors.full_messages.join(", ")
-#   elsif client.save
-#     body 'Client saved!'
-#   else
-#     status 400
-#     body 'Client not created'
-#   end
-#
-# end
+module ClientValidator
+
+  def validate_client
+   client = Client.new(camel_to_snake_case(params))
+   if Client.exists?(identifier: client.identifier)
+     { body: 'Client already exists', status: 403 }
+   elsif client.save
+     { body: "{identifier:" + client.identifier + "}", status: 200 }
+   else
+     { body: 'Client not created', status: 400 }
+   end
+  end
+
+end
