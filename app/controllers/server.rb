@@ -1,10 +1,12 @@
 require_relative '../models/param_parser'
 require_relative '../models/client_validator'
+require_relative '../models/payload_validator'
 
 module RushHour
   class Server < Sinatra::Base
     include ParamParser
     include ClientValidator
+    include PayloadValidator
 
     post '/sources' do
       client = validate_client
@@ -13,7 +15,7 @@ module RushHour
     end
 
     post '/sources/:identifier/data' do |identifier|
-      payload_request = PayloadRequest.new(create_payload(params))
+      validate_payload
     end
 
     not_found do
