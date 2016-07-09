@@ -1,11 +1,13 @@
 require_relative '../models/param_parser'
+require_relative '../models/client_validator'
 
 module RushHour
   class Server < Sinatra::Base
     include ParamParser
-    # include ClientValidator
+    #include ClientValidator
 
     post '/sources' do
+      require 'pry'; binding.pry
       client = Client.find_or_create(camel_to_snake_case(params))
       if client
         status 403
@@ -27,7 +29,7 @@ module RushHour
     end
 
     post '/sources/:identifier/data' do |identifier|
-      require "pry"; binding.pry
+      require 'pry'; binding.pry
       payload_request = PayloadRequest.new(create_payload(params))
     end
 
