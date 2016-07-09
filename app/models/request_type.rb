@@ -10,10 +10,10 @@ class RequestType < ActiveRecord::Base
   validates :method_name, presence: true, uniqueness: true
 
   def self.most_frequent_request_type
-    group(:method_name).count.max_by{|k,v| v}.first
+    find(PayloadRequest.most_frequent(:request_type_id)).method_name
   end
 
   def self.http_verbs
-    uniq.pluck(:method_name)
+    pluck(:method_name)
   end
 end

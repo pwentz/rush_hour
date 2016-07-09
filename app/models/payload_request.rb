@@ -22,4 +22,12 @@ class PayloadRequest < ActiveRecord::Base
   def self.min_response_time
     minimum(:responded_in)
   end
+
+  def self.most_frequent(id)
+    most_frequent_list(id).first.first
+  end
+
+  def self.most_frequent_list(id)
+    group(id).order('count_id DESC').count(:id)
+  end
 end
