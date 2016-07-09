@@ -4,32 +4,15 @@ require_relative '../models/client_validator'
 module RushHour
   class Server < Sinatra::Base
     include ParamParser
-    #include ClientValidator
+    include ClientValidator
 
     post '/sources' do
-      require 'pry'; binding.pry
-      client = Client.find_or_create(camel_to_snake_case(params))
-      if client
-        status 403
-        body client.errors.full_messages.join(", ")
-      elsif client.save
-        body 'Client saved!'
-      else
-        status 400
-        body 'Client not created'
-      end
-
-      #
-      # client_validator = ClientValidator.new( params)
-      #
-      # status client_validator[:status]
-      # body client_validator[:message]
-
-
+      client = validate_client
+      status client[:status]
+      body client[:body]
     end
 
     post '/sources/:identifier/data' do |identifier|
-      require 'pry'; binding.pry
       payload_request = PayloadRequest.new(create_payload(params))
     end
 
