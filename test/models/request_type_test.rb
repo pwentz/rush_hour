@@ -4,25 +4,36 @@ class RequestTypeTest < Minitest::Test
   include TestHelpers
 
   def test_request_types_have_relationship_with_payload
-    create_payload
+    rt = RequestType.new
 
-    assert_equal "GET", RequestType.all.first.method_name
+    assert rt.respond_to?(:payload_requests)
   end
 
-  def test_most_frequent_request_type
-    create_payload
+  def test_request_type_has_method_name_attribute
+    rt = RequestType.new(method_name: "GET")
 
-    assert_equal "GET", RequestType.most_frequent_request_type
-
-    create_multiple_payloads(3)
-
-    assert_equal "POST", RequestType.most_frequent_request_type
+    assert_equal "GET", rt.method_name
   end
 
-  def test_list_of_request_verbs_used
-    create_payload
-    create_multiple_payloads(3)
+  def test_request_type_created_w_valid_attributes
+    rt = RequestType.new(method_name: "GET")
 
-    assert_equal ["POST", "GET"], RequestType.http_verbs
+    assert rt.valid?
   end
+
+  def test_request_type_not_created_w_invalid_attributes
+    rt = RequestType.new
+
+    refute rt.valid?
+  end
+
+  def test_request_type_uniqueness
+    rt_one = RequestType.create(method_name: "GET")
+    rt_two = RequestType.create(method_name: "GET")
+
+    assert rt_one.valid?
+    refute rt_two.valid?
+    assert_equal 1, RequestType.count
+  end
+
 end
