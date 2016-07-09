@@ -4,20 +4,20 @@ class ServerTest < Minitest::Test
 
 
   def test_client_post_request
-    identifier = "{identifier:jumpstartlab}"
+    response_body = {"identifier":"jumpstartlab"}
 
-    params = {"identifier"=>"jumpstartlab", "rootUrl"=>"http://jumpstartlab.com"}
+    params = 'identifier=jumpstartlab&rootUrl=http://jumpstartlab.com'
 
     post '/sources', params
 
     assert_equal 200, last_response.status
-    assert_equal identifier, last_response.body
+    assert_equal response_body, last_response.body
     assert_equal 1, Client.count
   end
 
   def test_client_post_request_invalid_when_sent_without_root_url
-    params = {"identifier"=>"jumpstartlab"}
-                      
+    params = 'identifier=jumpstartlab'
+
     post '/sources', params
 
 
@@ -26,10 +26,10 @@ class ServerTest < Minitest::Test
   end
 
   def test_duplicate_client_post_request_returns_errors
-    params = {"identifier"=>"jumpstartlab", "rootUrl"=>"http://jumpstartlab.com"}
+    params = 'identifier=jumpstartlab&rootUrl=http://jumpstartlab.com'
 
     post '/sources', params
-                    
+
     post '/sources', params
 
 
