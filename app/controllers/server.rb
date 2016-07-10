@@ -1,6 +1,7 @@
 require_relative '../models/param_parser'
 require_relative '../models/client_validator'
 require_relative '../models/payload_validator'
+require 'pry'
 
 module RushHour
   class Server < Sinatra::Base
@@ -27,6 +28,8 @@ module RushHour
 
     get '/sources/:identifier/urls/:relative_path' do |identifier, relative_path|
       @client = Client.find_by(identifier: identifier)
+      @url = identifier + "/" + relative_path
+      @relative_path = relative_path
       erb :url_stats
     end
 
