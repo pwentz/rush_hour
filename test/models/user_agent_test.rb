@@ -47,19 +47,12 @@ class UserAgentTest < Minitest::Test
     ua_two = UserAgent.create(operating_system: "OS X 10.4.2", browser: "Firefox")
     ua_three = UserAgent.create(operating_system: "OS X 10.8.2", browser: "Safari")
 
-    fake_ua_data(ua_one.id, 2, 1)
-    fake_ua_data(ua_two.id, 3, 5)
-    fake_ua_data(ua_three.id, 4, 10)
+    dummy_payload(:user_agent_id, ua_one.id)
+    dummy_payload(:user_agent_id, ua_two.id, 3)
+    dummy_payload(:user_agent_id, ua_three.id, 4)
 
     assert_equal "Safari", UserAgent.top_browser_across_requests
     assert_equal "OS X 10.8.2", UserAgent.top_os_across_requests
   end
 
-  def fake_ua_data(ua_id, number, dummy)
-    number.times do
-      PayloadRequest.create(url_id: 1, requested_at: dummy += 1,
-                            responded_in: dummy += 1, referrer_id: 1, request_type_id: 3,
-                              user_agent_id: ua_id, resolution_id: 1, ip_address_id: 2)
-    end
-  end
 end

@@ -37,15 +37,20 @@ class RequestTypeTest < Minitest::Test
   end
 
   def test_find_most_frequent_response_type
-    create_payload
-    create_multiple_payloads(2)
+    rt_one = RequestType.create(method_name: "GET")
+    rt_two = RequestType.create(method_name: "POST")
+    dummy_payload(:request_type_id, rt_one.id, 3)
+    dummy_payload(:request_type_id, rt_two.id, 5)
 
     assert_equal "POST", RequestType.most_frequent_request_type
   end
 
   def test_can_retrieve_list_of_http_verbs
-    create_payload
-    create_multiple_payloads(1)
+    rt_one = RequestType.create(method_name: "GET")
+    rt_two = RequestType.create(method_name: "POST")
+    dummy_payload(:request_type_id, rt_one.id, 3)
+    dummy_payload(:request_type_id, rt_two.id, 5)
+
 
     assert RequestType.http_verbs.any?{|request| request == "GET"}
     assert RequestType.http_verbs.any?{|request| request == "POST"}

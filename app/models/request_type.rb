@@ -9,11 +9,13 @@ class RequestType < ActiveRecord::Base
 
   validates :method_name, presence: true, uniqueness: true
 
-  def self.most_frequent_request_type
-    find(PayloadRequest.most_frequent(:request_type_id)).method_name
-  end
+  class << self
+    def most_frequent_request_type
+      find(PayloadRequest.most_frequent(:request_type_id)).method_name
+    end
 
-  def self.http_verbs
-    pluck(:method_name)
+    def http_verbs
+      pluck(:method_name).uniq
+    end
   end
 end
