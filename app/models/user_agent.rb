@@ -11,11 +11,11 @@ class UserAgent < ActiveRecord::Base
 
   class << self
     def browser_list
-        pluck(:browser)
+        pluck(:browser).uniq
     end
 
     def operating_system_list
-        pluck(:operating_system)
+        pluck(:operating_system).uniq
     end
 
     def user_agents_across_requests
