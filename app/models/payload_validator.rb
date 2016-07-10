@@ -11,7 +11,11 @@ module PayloadValidator
   def sort_payload(params)
     payload = create_payload(params)
     if PayloadRequest.where(requested_at: payload.requested_at,
-                            url_id: payload.url_id).exists?
+                            url_id: payload.url_id, ip_address: payload.ip_address_id,
+                            referrer: payload.referrer_id, request_type: payload.request_type_id,
+                            resolution: payload.resolution_id, user_agent: payload.user_agent_id,
+                            responded_in: payload.responded_in).exists?
+
       { status: 403,
         body: "Already received payload request" }
     elsif !Client.exists?(identifier: params["identifier"])

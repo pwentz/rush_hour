@@ -77,6 +77,7 @@ class ServerTest < Minitest::Test
 
     post '/sources/jumpstartlab/data',params
 
+    require 'pry'; binding.pry
     assert_equal 200, last_response.status
     assert_equal "Payload saved!", last_response.body
   end
