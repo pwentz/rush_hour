@@ -20,6 +20,7 @@ module PayloadValidator
     else
       client = Client.find_by(identifier: params["identifier"])
       payload.save
+      client.payload_requests << payload
       { status: 200,
         body: "Payload saved!" }
     end
