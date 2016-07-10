@@ -12,7 +12,7 @@ class Resolution < ActiveRecord::Base
 
   class << self
     def resolution_dimensions_across_requests
-      all.map do |resolution|
+      all.uniq.map do |resolution|
         "#{resolution.width} x #{resolution.height}"
       end
     end

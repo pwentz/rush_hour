@@ -1,6 +1,7 @@
-<h1>Statistics</h1>
+<div class="col-centered text-centered">
+<h1><%= @client.identifier.capitalize %> Statistics</h1>
 
-<div id="statistics">
+<div class="" id="statistics">
 
     <h3>Average Response Time</h3>
       <p><%= @client.payload_requests.average_response_time %></p>
@@ -25,4 +26,5 @@
     <h3>Screen Resolution Breakdown</h3>
       <p><%= @client.resolutions.resolution_dimensions_across_requests %></p>
 
+</div>
 </div>

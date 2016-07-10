@@ -15,7 +15,7 @@ class RequestType < ActiveRecord::Base
     end
 
     def http_verbs
-      pluck(:method_name)
+      pluck(:method_name).uniq
     end
 
   end
