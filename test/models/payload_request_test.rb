@@ -42,12 +42,8 @@ class PayloadRequestTest < Minitest::Test
   end
 
   def test_payload_calculates_response_times
-    PayloadRequest.create(url_id: 1, requested_at: "2013-02-16 21:38:28 -0700",
-                            responded_in: 5, referrer_id: 1, request_type_id: 1,
-                            user_agent_id: 1, resolution_id: 1, ip_address_id: 1)
-    PayloadRequest.create(url_id: 1, requested_at: "2012-02-16 21:38:28 -0700",
-                            responded_in: 35, referrer_id: 1, request_type_id: 1,
-                            user_agent_id: 1, resolution_id: 1, ip_address_id: 1)
+    dummy_payload(:responded_in, 5)
+    dummy_payload(:responded_in, 35)
 
     assert_equal 20, PayloadRequest.average_response_time
     assert_equal 35, PayloadRequest.max_response_time
@@ -55,6 +51,7 @@ class PayloadRequestTest < Minitest::Test
   end
 
   def test_payload_calculates_most_frequent_id_of_any_attribute
+    skip
     PayloadRequest.create(url_id: 1, requested_at: "2012-02-16 21:38:28 -0700",
                             responded_in: 35, referrer_id: 1, request_type_id: 1,
                             user_agent_id: 1, resolution_id: 1, ip_address_id: 1)
