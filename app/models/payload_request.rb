@@ -43,6 +43,20 @@ class PayloadRequest < ActiveRecord::Base
     def ordered_response_times
       order(responded_in: :desc).pluck(:responded_in)
     end
+
+    def requested_urls_in_descending_order
+      most_frequent_list(:url_id).reduce({}) do |result, url|
+        result.merge!(Url.find(url.first).root_url + Url.find(url.first).path => url.last)
+      end.sort_by{|k,v| -v }.to_h
+    end
+
+    def top_requested_url
+      requested_urls_in_descending_order.keys.first
+    end
+
+    def min_requested_url
+      requested_urls_in_descending_order.keys.last
+    end
   end
 
 end

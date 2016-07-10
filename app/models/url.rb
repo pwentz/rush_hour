@@ -31,14 +31,15 @@ class Url < ActiveRecord::Base
     end
 
     def validate_url(params)
-      client = Client.find_by(:identifier == params[:identifier])
-      url = client.urls.where(root_url: client.root_url, path: "/#{params[relative_path]}")
+      client = Client.find_by(identifier: params[:identifier])
+      url = client.urls.where(path: "/" + params[:relative_path])
       if url.exists?
-        {:url => url, :erb => :url_stats}
+        {:url => url.uniq.first, :erb => :url_stats}
       else
         {:erb => :error, :message => "The url specified does not have any payload requests yet."}
       end
     end
+
   end
 
 end

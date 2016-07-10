@@ -1,4 +1,4 @@
-<h1>Statistics for <%= @url %></h1>
+<h1>Statistics for <%= @url.root_url + @url.path %></h1>
 
 <div id="statistics">
 
@@ -9,12 +9,12 @@
     <h3>Minimum Response Time</h3>
       <p><%= @url.payload_requests.min_response_time %></p>
     <h3>Response times from longest to shortest</h3>
-      <p><%= @url.payload_request.ordered_response_times %>
+      <p><%= @url.payload_requests.ordered_response_times.to_s %>
     <h3>All HTTP Verbs</h3>
-      <p><%= @url.request_types.http_verbs %></p>
+      <p><%= @url.request_types.http_verbs.to_s %></p>
     <h3>Top three referrers</h3>
-      <p><%= @url.referrers.top_referrers %></p>
+      <p><%= @url.referrers.top_referrers.to_s %></p>
     <h3>Top three user agents</h3>
-      <p><%= @url.user_agents.top_user_agents %></p>
+      <p><%= @url.user_agents.top_user_agents.to_s %></p>
 
 </div>
