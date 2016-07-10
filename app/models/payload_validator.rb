@@ -10,7 +10,11 @@ module PayloadValidator
 
   def sort_payload(params)
     payload = create_payload(params)
-    if PayloadRequest.where(requested_at: payload.requested_at,
+    if !Client.exists?(identifier: params["identifier"])
+      { status: 403,
+        body: "Application is not yet registered" }
+    elsif Client.find_by(identifier: params["identifier"]).payload_requests.where(
+                            requested_at: payload.requested_at,
                             url_id: payload.url_id, ip_address_id: payload.ip_address_id,
                             referrer_id: payload.referrer_id, request_type_id: payload.request_type_id,
                             resolution_id: payload.resolution_id, user_agent_id: payload.user_agent_id,
@@ -18,9 +22,6 @@ module PayloadValidator
 
       { status: 403,
         body: "Already received payload request" }
-    elsif !Client.exists?(identifier: params["identifier"])
-      { status: 403,
-        body: "Application is not yet registered" }
     else
       client = Client.find_by(identifier: params["identifier"])
       payload.save
