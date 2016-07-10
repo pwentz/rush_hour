@@ -11,7 +11,9 @@ class PayloadRequest < ActiveRecord::Base
   belongs_to  :user_agent
 
 
-  validates :requested_at, presence: true, uniqueness: {:scope => :url_id}
+  validates :requested_at, presence: true, uniqueness: {:scope => [:url_id, :ip_address_id, :referrer_id,
+                                                                   :request_type_id, :resolution_id, :user_agent_id,
+                                                                   :client_id]}
   validates :responded_in, presence: true
 
   class << self
