@@ -1,7 +1,7 @@
 module ClientValidator
 
-  def validate_client
-   client = Client.new(parse_client_request)
+  def validate_client(params)
+   client = Client.new(parse_client_request(params))
    if Client.exists?(identifier: client.identifier)
      { body: 'Client already exists', status: 403 }
    elsif client.save
@@ -11,7 +11,7 @@ module ClientValidator
    end
   end
 
-  def parse_client_request
+  def parse_client_request(params)
     {identifier: params[:identifier], root_url: params[:rootUrl]}
   end
 

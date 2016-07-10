@@ -1,14 +1,14 @@
 module PayloadValidator
-  def validate_payload
+  def validate_payload(params)
     unless params.has_key?("payload")
       { status: 400,
         body: "Bad Request, missing payload" }
     else
-      sort_payload
+      sort_payload(params)
     end
   end
 
-  def sort_payload
+  def sort_payload(params)
     payload = create_payload(params)
     if PayloadRequest.where(requested_at: payload.requested_at,
                             url_id: payload.url_id).exists?

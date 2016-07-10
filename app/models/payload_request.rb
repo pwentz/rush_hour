@@ -1,3 +1,6 @@
+require_relative 'payload_validator'
+require_relative 'payload_parser'
+
 class PayloadRequest < ActiveRecord::Base
   belongs_to  :client
   belongs_to  :ip_address
@@ -12,6 +15,9 @@ class PayloadRequest < ActiveRecord::Base
   validates :responded_in, presence: true
 
   class << self
+    include PayloadValidator
+    include PayloadParser
+
     def average_response_time
       average(:responded_in).to_i
     end
