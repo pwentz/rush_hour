@@ -4,7 +4,9 @@ class ClientCanSeeAllUrlStatsTest < FeatureTest
   include TestHelpers
 
   def setup
-    url_create("http://jumpstartlab.com", "/")
+    client = Client.create(root_url: "http://jumpstartlab.com", identifier: "jumpstartlab")
+    dummy_payload(:client_id, client.id, 4)
+    url_create("http://jumpstartlab.com", "/blog")
     request_type_create("GET")
     resolution_create("1920", "1580")
     user_agent_create("OS X 10.8.2", "Chrome")
@@ -13,8 +15,6 @@ class ClientCanSeeAllUrlStatsTest < FeatureTest
   end
 
   def test_client_can_see_their_statistics
-    client = Client.create(root_url: "http://jumpstartlab.com", identifier: "jumpstartlab")
-    dummy_payload(:client_id, client.id, 4)
 
     visit '/sources/jumpstartlab'
 
@@ -38,5 +38,15 @@ class ClientCanSeeAllUrlStatsTest < FeatureTest
       assert has_content?("Screen Resolution Breakdown")
       assert has_content?("1920 x 1580")
     end
+  end
+
+  def test_client_can_click_specific_url
+    visit '/sources/jumpstartlab'
+
+    within("#statistics") do
+      click_link("http://jumpstartlab.com/blog")
+    end
+
+    assert_equal "/sources/jumpstartlab/urls/blog", current_path
   end
 end
