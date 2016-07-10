@@ -14,8 +14,8 @@
       <p><%= @client.request_types.http_verbs %></p>
 
     <h3>All URLs By Rank</h3>
-      <% @client.urls.most_requested_to_least_requested.each do |url| %>
-        <%= {erb :'/shared/_requests_by_url', :locals => {:url => url}}%>
+      <% @client.urls.most_requested_urls.each do |url| %>
+        <%= erb :'/shared/_requests_by_url', :locals => {:url => url} %>
       <% end %>
 
     <h3>Web Browser Breakdown</h3>
@@ -23,6 +23,6 @@
     <h3>Operating System Breakdown</h3>
       <p><%= @client.user_agents.operating_system_list %></p>
     <h3>Screen Resolution Breakdown</h3>
-      <p><%= @client.resolutions.resolution_list %></p>
+      <p><%= @client.resolutions.resolution_dimensions_across_requests %></p>
 
 </div>

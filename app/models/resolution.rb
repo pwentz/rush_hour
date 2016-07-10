@@ -9,13 +9,12 @@ class Resolution < ActiveRecord::Base
   validates :width,   presence: true, uniqueness: {:scope => :height}
   validates :height,  presence: true, uniqueness: {:scope => :width}
 
-  def self.resolution_list
-    all.map { |i| "#{i.width} x #{i.height}"}.uniq
-  end
 
-  def self.resolution_dimensions_across_requests
-    PayloadRequest.group(:resolution).count.keys.map do |resolution|
-      "#{resolution.width} x #{resolution.height}"
+  class << self
+    def resolution_dimensions_across_requests
+      all.map do |resolution|
+        "#{resolution.width} x #{resolution.height}"
+      end
     end
   end
 end

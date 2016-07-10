@@ -11,9 +11,15 @@ class Url < ActiveRecord::Base
 
   class << self
     def most_requested_to_least_requested
-      PayloadRequest.group(:url_id).count.reduce({}) do |result, url|
+      group(:url_id).count.reduce({}) do |result, url|
         result.merge!(Url.find(url.first).root_url + Url.find(url.first).path => url.last)
       end.sort_by{|k,v| -v }.to_h
+    end
+
+    def most_requested_urls
+      most_requested_to_least_requested.keys.map do |url|
+       Url.find_by(path: "/#{url.split("/")[3..-1].join("/")}")
+      end
     end
 
     def most_requested
@@ -26,10 +32,11 @@ class Url < ActiveRecord::Base
 
     def validate_url(params)
       client = Client.find_by(:identifier == params[:identifier])
-      if client.urls.where(root_url: client.root_url, path: "#{/params["relative_path"]}").exists?
-        {:client => client, :erb => :url_stats}
+      url = client.urls.where(root_url: client.root_url, path: "/#{params[relative_path]}")
+      if url.exists?
+        {:url => url, :erb => :url_stats}
       else
-        {:erb => :error, :message => ""}
+        {:erb => :error, :message => "The url specified does not have any payload requests yet."}
       end
     end
   end
