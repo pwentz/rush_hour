@@ -11,23 +11,30 @@ class PayloadRequest < ActiveRecord::Base
   validates :requested_at, presence: true, uniqueness: {:scope => :url_id}
   validates :responded_in, presence: true
 
-  def self.average_response_time
-    average(:responded_in).round(3)
+  class << self
+    def average_response_time
+      average(:responded_in).round(3)
+    end
+
+    def max_response_time
+      maximum(:responded_in)
+    end
+
+    def min_response_time
+      minimum(:responded_in)
+    end
+
+    def most_frequent(id)
+      most_frequent_list(id).first.first
+    end
+
+    def most_frequent_list(id)
+      group(id).order('count_id DESC').count(:id)
+    end
+
+    def ordered_response_times
+      order(responded_in: :desc).pluck(:responded_in)
+    end
   end
 
-  def self.max_response_time
-    maximum(:responded_in)
-  end
-
-  def self.min_response_time
-    minimum(:responded_in)
-  end
-
-  def self.most_frequent(id)
-    most_frequent_list(id).first.first
-  end
-
-  def self.most_frequent_list(id)
-    group(id).order('count_id DESC').count(:id)
-  end
 end

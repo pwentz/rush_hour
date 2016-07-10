@@ -7,4 +7,15 @@ class Referrer < ActiveRecord::Base
   has_many  :user_agents,   through: :payload_requests
 
   validates :referrer, presence: true, uniqueness: true
+
+  class << self
+    def top_referrers
+      find_top_three(:referrer).keys
+    end
+
+    def find_top_three(attribute)
+      group(attribute).count.sort_by { |k,v| -v }.to_h
+    end
+  end
+
 end

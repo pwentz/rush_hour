@@ -73,10 +73,10 @@ class UrlTest < Minitest::Test
 
     fake_url_data(url_one.id, 4)
 
-    assert_equal 40, url_one.max_response_time
-    assert_equal 37, url_one.min_response_time
-    assert_equal [40, 39, 38, 37], url_one.ordered_response_times
-    assert_equal 38.5, url_one.average_response_time
+    assert_equal 40, url_one.payload_requests.max_response_time
+    assert_equal 37, url_one.payload_requests.min_response_time
+    assert_equal [40, 39, 38, 37], url_one.payload_requests.ordered_response_times
+    assert_equal 38.5, url_one.payload_requests.average_response_time
   end
 
   def test_http_verbs_for_url
@@ -90,7 +90,7 @@ class UrlTest < Minitest::Test
                             responded_in: 7, referrer_id: 1, request_type_id: rt_two.id,
                               user_agent_id: 1, resolution_id: 1, ip_address_id: 2)
 
-    assert_equal ["GET", "POST"], url_one.http_verbs
+    assert_equal ["GET", "POST"], url_one.request_types.http_verbs
   end
 
   def test_top_referrers_per_url
@@ -122,9 +122,9 @@ class UrlTest < Minitest::Test
                           responded_in: (35 + dummy), referrer_id: ref_four.id, request_type_id: 3,
                             user_agent_id: 1, resolution_id: 1, ip_address_id: 2)
 
-    assert_equal "http://www.bing.com", url_one.top_referrers.first
-    assert_equal "http://www.turing.io", url_one.top_referrers[1]
-    assert_equal "http://www.jumpstartlab.com", url_one.top_referrers.last
+    assert_equal "http://www.bing.com", url_one.referrers.top_referrers.first
+    assert_equal "http://www.turing.io", url_one.referrers.top_referrers[1]
+    assert_equal "http://www.jumpstartlab.com", url_one.referrers.top_referrers.last
   end
 
   def test_top_three_user_agents_by_url
@@ -157,9 +157,9 @@ class UrlTest < Minitest::Test
                           responded_in: (35 + dummy), referrer_id: 1, request_type_id: 3,
                             user_agent_id: ua_four.id, resolution_id: 1, ip_address_id: 2)
 
-    assert_equal "OS X 10.8.2 Safari", url_one.top_user_agents.first
-    assert_equal "OS X 10.4.2 Firefox", url_one.top_user_agents[1]
-    assert_equal "OS X 10.8.2 Chrome", url_one.top_user_agents.last
+    assert_equal "OS X 10.8.2 Safari", url_one.user_agents.top_user_agents.first
+    assert_equal "OS X 10.4.2 Firefox", url_one.user_agents.top_user_agents[1]
+    assert_equal "OS X 10.8.2 Chrome", url_one.user_agents.top_user_agents.last
   end
 
   def fake_url_data(url_id, number)
