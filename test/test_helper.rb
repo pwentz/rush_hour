@@ -34,7 +34,7 @@ module TestHelpers
 
   def dummy_payload(type, id, number=1, dummy=35)
     number.times do
-      PayloadRequest.create({url_id: 1, requested_at: rand(100), responded_in: dummy += 1,
+      PayloadRequest.create({url_id: 1, requested_at: rand(1000), responded_in: dummy += 1,
                             request_type_id: 1, referrer_id: 1, user_agent_id: 1, 
                             resolution_id: 1, ip_address_id: 2}.merge(type => id))
     end
