@@ -14,5 +14,16 @@ class Client < ActiveRecord::Base
 
   class << self
     include ClientValidator
+
+    def find_client(identifier)
+      client = Client.find_by(identifier: identifier)
+      if !client
+        {:erb => :error}
+      elsif client.payload_requests.empty?
+        {:client => client, :erb => :no_payload}
+      else
+        {:client => client, :erb => :stats}
+      end
+    end
   end
 end
