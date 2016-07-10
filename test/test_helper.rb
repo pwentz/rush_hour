@@ -13,6 +13,10 @@ require 'pry'
 
 Capybara.app = RushHour::Server
 
+class FeatureTest < Minitest::Test
+  include Capybara::DSL
+end
+
 DatabaseCleaner.strategy = :truncation
 
 module TestHelpers
@@ -39,4 +43,29 @@ module TestHelpers
                             resolution_id: 1, ip_address_id: 2}.merge(type => id))
     end
   end
+
+  def url_create(root, path)
+    Url.create(root_url: root, path: path)
+  end
+
+  def request_type_create(method_name)
+    RequestType.create(method_name: method_name)
+  end
+
+  def resolution_create(width, height)
+    Resolution.create(height: height, width: width)
+  end
+  
+  def user_agent_create(os, browser)
+    UserAgent.create(operating_system: os, browser: browser)
+  end
+
+  def referrer_create(referrer)
+    Referrer.create(referrer: referrer)
+  end
+  
+  def ip_address_create(ip_address)
+    IPAddress.create(ip_address: ip_address)
+  end
+
 end
