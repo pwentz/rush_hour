@@ -1,1 +1,28 @@
 <h1>Statistics for <%= @url %></h1>
+
+<!-- <div id="statistics">
+
+    <h3>Average Response Time</h3>
+      <p><%= @client.payload_requests.average_response_time %></p>
+    <h3>Maximum Response Time</h3>
+      <p><%= @client.payload_requests.max_response_time %></p>
+    <h3>Minimum Response Time</h3>
+      <p><%= @client.payload_requests.min_response_time %></p>
+    <h3>Most Frequent Request Type</h3>
+      <p><%= @client.request_types.most_frequent_request_type %></p>
+    <h3>All HTTP Verbs</h3>
+      <p><%= @client.request_types.http_verbs %></p>
+    <h3>All URLs By Rank</h3>
+      <p><% @client.urls.most_requested_to_least_requested.each do |url| %>
+        <% relative_path = url.path %>
+        <% display_url = url.root_url + url.path %>
+        <a href="/sources/<%= @client.identifier %>/urls/<%= relative_path %>"><%= display_url %></a><br>
+      <% end %></p>
+    <h3>Web Browser Breakdown</h3>
+      <p><%= @client.user_agents.browser_list %></p>
+    <h3>Operating System Breakdown</h3>
+      <p><%= @client.user_agents.operating_system_list %></p>
+    <h3>Screen Resolution Breakdown</h3>
+      <p><%= @client.resolutions.resolution_list %></p>
+
+</div> -->
