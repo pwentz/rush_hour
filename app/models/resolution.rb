@@ -12,4 +12,10 @@ class Resolution < ActiveRecord::Base
   def self.resolution_list
     all.map { |i| "#{i.width} x #{i.height}"}.uniq
   end
+
+  def self.resolution_dimensions_across_requests
+    PayloadRequest.group(:resolution).count.keys.map do |resolution|
+      "#{resolution.width} x #{resolution.height}"
+    end
+  end
 end
