@@ -17,14 +17,15 @@ module RushHour
 
     get '/sources/:identifier' do |identifier|
       client = Client.find_client(identifier)
-      @client = client[:client]
+      @client = client
+      @message = client[:message]
       erb client[:erb]
     end
 
     get '/sources/:identifier/urls/:relative_path' do |identifier, relative_path|
-      client = Client.find_by(identifier: identifier)
-      @url = Url.find_by(root_url: client.root_url, path: "/#{relative_path}")
-      erb :url_stats
+      @url = Url.validate_url(params)
+      @message = @url[:message]
+      erb @url[:erb]
     end
 
     not_found do
