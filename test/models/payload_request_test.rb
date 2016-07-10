@@ -50,6 +50,20 @@ class PayloadRequestTest < Minitest::Test
     assert_equal 5, PayloadRequest.min_response_time
   end
 
+  def test_requested_url_breakdown_descending_order
+    url_one = Url.create(root_url: "http://jumpstartlab.com", path: "/blog")
+    url_two = Url.create(root_url: "http://mysite.com", path: "/blog")
+    url_three = Url.create(root_url: "http://jumpstartlab.com", path: "/store")
+
+    dummy_payload(:url_id, url_one.id, 2)
+    dummy_payload(:url_id, url_three.id, 4)
+    dummy_payload(:url_id, url_two.id, 3)
+
+    assert_equal "http://jumpstartlab.com/store", PayloadRequest.top_requested_url
+    assert_equal "http://jumpstartlab.com/blog", PayloadRequest.min_requested_url
+    assert_equal "http://mysite.com/blog", PayloadRequest.requested_urls_in_descending_order.keys[1]
+  end
+
   def test_payload_calculates_most_frequent_id_of_any_attribute
     skip
     PayloadRequest.create(url_id: 1, requested_at: "2012-02-16 21:38:28 -0700",

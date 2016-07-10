@@ -54,20 +54,6 @@ class UrlTest < Minitest::Test
     assert_equal 3, Url.count
   end
 
-  def test_requested_url_breakdown_descending_order
-    url_one = Url.create(root_url: "http://jumpstartlab.com", path: "/blog")
-    url_two = Url.create(root_url: "http://mysite.com", path: "/blog")
-    url_three = Url.create(root_url: "http://jumpstartlab.com", path: "/store")
-
-    dummy_payload(:url_id, url_one.id, 2)
-    dummy_payload(:url_id, url_three.id, 4)
-    dummy_payload(:url_id, url_two.id, 3)
-
-    assert_equal "http://jumpstartlab.com/store", Url.most_requested
-    assert_equal "http://jumpstartlab.com/blog", Url.least_requested
-    assert_equal "http://mysite.com/blog", Url.most_requested_to_least_requested.keys[1]
-  end
-
   def test_response_time_stats_for_url
     url_one = Url.create(root_url: "http://jumpstartlab.com", path: "/blog")
 
