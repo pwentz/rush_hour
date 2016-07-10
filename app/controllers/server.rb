@@ -1,22 +1,16 @@
-require_relative '../models/param_parser'
-require_relative '../models/client_validator'
-require_relative '../models/payload_validator'
 require 'pry'
 
 module RushHour
   class Server < Sinatra::Base
-    include ParamParser
-    include ClientValidator
-    include PayloadValidator
 
     post '/sources' do
-      client = validate_client
+      client = Client.validate_client(params)
       status client[:status]
       body client[:body]
     end
 
     post '/sources/:identifier/data' do
-      payload = validate_payload
+      payload = PayloadRequest.validate_payload(params)
       status payload[:status]
       body payload[:body]
     end

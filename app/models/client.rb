@@ -1,3 +1,5 @@
+require_relative 'client_validator'
+
 class Client < ActiveRecord::Base
   has_many  :payload_requests
   has_many  :ip_addresses,  through: :payload_requests
@@ -9,4 +11,8 @@ class Client < ActiveRecord::Base
 
   validates :identifier,  presence: true, :uniqueness => {:scope => :root_url}
   validates :root_url,    presence: true, :uniqueness => {:scope => :identifier}
+
+  class << self
+    include ClientValidator
+  end
 end
