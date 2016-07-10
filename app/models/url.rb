@@ -23,6 +23,15 @@ class Url < ActiveRecord::Base
     def least_requested
       most_requested_to_least_requested.keys.last
     end
+
+    def validate_url(params)
+      client = Client.find_by(:identifier == params[:identifier])
+      if client.urls.where(root_url: client.root_url, path: "#{/params["relative_path"]}").exists?
+        {:client => client, :erb => :url_stats}
+      else
+        {:erb => :error, :message => ""}
+      end
+    end
   end
 
 end

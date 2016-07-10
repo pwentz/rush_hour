@@ -18,9 +18,9 @@ class Client < ActiveRecord::Base
     def find_client(identifier)
       client = Client.find_by(identifier: identifier)
       if !client
-        {:erb => :error}
+        {:erb => :error, :message => ""}
       elsif client.payload_requests.empty?
-        {:client => client, :erb => :no_payload}
+        {:client => client, :erb => :error, :message => ""}
       else
         {:client => client, :erb => :stats}
       end
