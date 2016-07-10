@@ -15,6 +15,14 @@ class Url < ActiveRecord::Base
     end.sort_by{|k,v| -v }.to_h
   end
 
+  def self.most_requested
+    most_requested_to_least_requested.keys.first
+  end
+
+  def self.least_requested
+    most_requested_to_least_requested.keys.last
+  end
+
   def average_response_time
     payload_requests.average_response_time
   end
@@ -39,17 +47,13 @@ class Url < ActiveRecord::Base
     find_top_three(referrers, :referrer).keys
   end
 
-  def top_user_agents
-    # Url.find(1).payload_requests.reduce({}) do |result, payload|
-    #   result.merge!(UserAgent.find(payload.user_agent_id).operating_system + " " +
-    #                 UserAgent.find(payload.user_agent_id).browser => 1) do |key, old, new|
-    #     old + new
-    #   end
-    # end.sort_by{|url, number| -number}[0..2].to_h
-    user_agents.group(:operating_system, :browser).count.sort_by { |k,v| -v }.to_h.keys
-  end
-
   def find_top_three(table, attribute)
     table.group(attribute).count.sort_by { |k,v| -v }.to_h
+  end
+
+  def top_user_agents
+    user_agents.user_agents_across_requests.reduce({}) do |result, ua|
+      result.merge!("#{ua.first.operating_system} #{ua.first.browser}" => ua.last)
+    end.keys.first(3)
   end
 end

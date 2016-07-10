@@ -47,6 +47,8 @@ class RequestTypeTest < Minitest::Test
     create_payload
     create_multiple_payloads(1)
 
-    assert_equal ["GET", "POST"], RequestType.http_verbs
+    assert RequestType.http_verbs.any?{|request| request == "GET"}
+    assert RequestType.http_verbs.any?{|request| request == "POST"}
+    assert_equal 2, RequestType.http_verbs.count
   end
 end

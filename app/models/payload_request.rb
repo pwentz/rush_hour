@@ -12,7 +12,7 @@ class PayloadRequest < ActiveRecord::Base
   validates :responded_in, presence: true
 
   def self.average_response_time
-    average(:responded_in).to_i
+    average(:responded_in).round(3)
   end
 
   def self.max_response_time
