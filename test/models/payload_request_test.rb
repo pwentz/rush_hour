@@ -59,8 +59,8 @@ class PayloadRequestTest < Minitest::Test
     dummy_payload(:url_id, url_three.id, 4)
     dummy_payload(:url_id, url_two.id, 3)
 
-    assert_equal "http://jumpstartlab.com/store", PayloadRequest.top_requested_url
-    assert_equal "http://jumpstartlab.com/blog", PayloadRequest.min_requested_url
-    assert_equal "http://mysite.com/blog", PayloadRequest.requested_urls_in_descending_order.keys[1]
+    assert_equal url_one, PayloadRequest.most_requested_urls.last
+    assert_equal url_two, PayloadRequest.most_requested_urls[1]
+    assert_equal url_three, PayloadRequest.most_requested_urls.first
   end
 end

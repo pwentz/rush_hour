@@ -33,7 +33,6 @@ module PayloadParser
   end
 
   def format_url(url)
-    # refactor?
     {:root_url => split_url(url)[0..2].join("/"), :path => "/" + split_url(url).last}
   end
 

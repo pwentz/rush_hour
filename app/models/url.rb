@@ -10,26 +10,6 @@ class Url < ActiveRecord::Base
   validates :path,      presence: true, uniqueness: {:scope => :root_url}
 
   class << self
-    def most_requested_to_least_requested
-      group(:url_id).count.reduce({}) do |result, url|
-        result.merge!(Url.find(url.first).root_url + Url.find(url.first).path => url.last)
-      end.sort_by{|k,v| -v }.to_h
-    end
-
-    def most_requested_urls
-      most_requested_to_least_requested.keys.map do |url|
-       Url.find_by(path: "/#{url.split("/")[3..-1].join("/")}")
-      end
-    end
-
-    def most_requested
-      most_requested_to_least_requested.keys.first
-    end
-
-    def least_requested
-      most_requested_to_least_requested.keys.last
-    end
-
     def validate_url(params)
       client = Client.find_by(identifier: params[:identifier])
       url = client.urls.where(path: "/" + params[:relative_path])
