@@ -43,11 +43,6 @@ class PayloadRequest < ActiveRecord::Base
     def ordered_response_times
       order(responded_in: :desc).pluck(:responded_in)
     end
-
-    def most_requested_urls
-      group(:url).count.sort_by{|k,v|-v}.map(&:first)
-    end
-
   end
 
 end

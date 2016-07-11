@@ -1,19 +1,14 @@
 require 'user_agent_parser'
 module PayloadParser
 
-  def camel_to_snake_case(params)
+  def payload_parse(params)
     params.reduce({}) do |result, param|
       result.merge!(param.first.underscore => param.last)
     end
   end
 
-  def payload_parse(params)
-    camel_to_snake_case(JSON(params[:payload]))
-  end
-
-
   def create_payload(params)
-    payload = payload_parse(params)
+    payload = payload_parse(JSON(params[:payload]))
 
     url         = Url.find_or_create_by(format_url(payload["url"]))
     rtype       = RequestType.find_or_create_by(method_name: payload["request_type"])

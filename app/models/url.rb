@@ -16,10 +16,26 @@ class Url < ActiveRecord::Base
       if url.exists?
         {:url => url.uniq.first, :erb => :url_stats}
       else
-        {:erb => :error, :message => "The url specified does not have any payload requests yet."}
+        {:erb => :error,
+         :message => "The url specified does not have any payload requests yet."}
       end
     end
-
   end
+
+    def top_three_referrers
+      payload_requests.most_frequent_list(:referrer).keys.map do |referrer|
+        referrer.referrer
+      end.first(3)
+    end
+
+    def top_three_user_agents
+      payload_requests.most_frequent_list(:user_agent).keys.map do |user_agent|
+        "#{user_agent.operating_system} #{user_agent.browser}"
+      end.first(3)
+    end
+
+    def http_verbs
+      payload_requests.most_frequent_list(:request_type).keys.map(&:method_name).uniq
+    end
 
 end

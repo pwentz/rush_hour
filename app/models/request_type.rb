@@ -8,15 +8,4 @@ class RequestType < ActiveRecord::Base
   has_many  :user_agents,   through: :payload_requests
 
   validates :method_name, presence: true, uniqueness: true
-
-  class << self
-    def most_frequent_request_type
-      find(PayloadRequest.most_frequent(:request_type_id)).method_name
-    end
-
-    def http_verbs
-      pluck(:method_name).uniq
-    end
-
-  end
 end

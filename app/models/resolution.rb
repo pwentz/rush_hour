@@ -8,13 +8,4 @@ class Resolution < ActiveRecord::Base
 
   validates :width,   presence: true, uniqueness: {:scope => :height}
   validates :height,  presence: true, uniqueness: {:scope => :width}
-
-
-  class << self
-    def resolution_dimensions_across_requests
-      all.uniq.map do |resolution|
-        "#{resolution.width} x #{resolution.height}"
-      end
-    end
-  end
 end

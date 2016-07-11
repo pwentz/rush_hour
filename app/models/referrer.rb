@@ -8,14 +8,4 @@ class Referrer < ActiveRecord::Base
 
   validates :referrer, presence: true, uniqueness: true
 
-  class << self
-    def top_referrers
-      find_top_three(:referrer).keys.first(3)
-    end
-
-    def find_top_three(attribute)
-      group(attribute).count.sort_by { |k,v| -v }.to_h
-    end
-  end
-
 end

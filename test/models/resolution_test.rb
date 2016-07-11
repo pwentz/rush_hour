@@ -52,20 +52,4 @@ class ResolutionTest < Minitest::Test
     assert res_three.valid?
     assert_equal 3, Resolution.count
   end
-
-  def test_resolution_across_requests
-    res_one = Resolution.create(width: "1920", height: "1280")
-    res_two = Resolution.create(width: "2000", height: "1280")
-    res_three = Resolution.create(width: "1920", height: "1350")
-
-    dummy_payload(:resolution_id, res_one.id)
-    dummy_payload(:resolution_id, res_two.id, 5)
-    dummy_payload(:resolution_id, res_three.id, 7)
-
-    assert Resolution.resolution_dimensions_across_requests.any?{|v| v == "1920 x 1280"}
-    assert Resolution.resolution_dimensions_across_requests.any?{|v| v == "2000 x 1280"}
-    assert Resolution.resolution_dimensions_across_requests.any?{|v| v == "1920 x 1350"}
-    assert_equal 3, Resolution.count
-  end
-
 end
