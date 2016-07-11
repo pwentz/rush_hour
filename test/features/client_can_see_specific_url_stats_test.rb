@@ -38,14 +38,12 @@ class ClientCanSeeSpecificUrlStatsTest < FeatureTest
       assert has_content?("36")
       assert has_content?("All HTTP Verbs")
       assert has_content?("GET")
-      # assert has_content?("Response Times from Longest to Shortest")
-      # assert has_content?("a")
-      # assert has_content?("Top Three Referrers")
+      assert has_content?("Response Times from Longest to Shortest")
+      assert has_content?("a")
+      assert has_content?("Top Three Referrers")
       assert has_content?("www.google.com")
-      # assert has_content?("Top Three User Agents")
+      assert has_content?("Top Three User Agents")
       assert has_content?("OS X 10.8.2 Chrome")
-      # assert has_content?("Screen Resolution Breakdown")
-      # assert has_content?("1920 x 1580")
     end
   end
 end
