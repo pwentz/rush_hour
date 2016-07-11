@@ -1,7 +1,15 @@
+div {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  }
 span.glyphicon {
     vertical-align: middle;
     margin-top: -5px;
 }
 .alert {
   margin-top: 50px;
+}
+.btn-md {
+  margin: 1px;
 }
