@@ -1,5 +1,5 @@
 require 'user_agent_parser'
-module ParamParser
+module PayloadParser
 
   def camel_to_snake_case(params)
     params.reduce({}) do |result, param|
