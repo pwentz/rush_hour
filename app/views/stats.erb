@@ -25,7 +25,7 @@
       </div>
       <div class="btn-group" role="group">
         <button type="button" class="btn btn-default">
-          <h1><%= @client.request_types.most_frequent_request_type %></h1>
+          <h1><%= @client.most_frequent_request_type %></h1>
           <small>Most Frequent Request Type</small>
         </button>
       </div>
@@ -34,7 +34,7 @@
     <div class="btn-group btn-group-justified">
       <div class="btn-group" role="group">
         <button type="button" class="btn btn-default">
-          <% @client.request_types.http_verbs.each do |rt| %>
+          <% @client.all_http_verbs.each do |rt| %>
           <h1><%= "#{rt}" %></h1>
           <% end %>
           <small>All HTTP Verbs</small>
@@ -42,7 +42,7 @@
       </div>
       <div class="btn-group" role="group">
         <button type="button" class="btn btn-default">
-          <% @client.payload_requests.most_requested_urls.each do |url| %>
+          <% @client.most_requested_urls.each do |url| %>
             <%= erb :'/shared/_requests_by_url', :locals => {:url => url} %>
           <% end %>
           <small>All URLs By Rank</small>
@@ -50,7 +50,7 @@
       </div>
       <div class="btn-group" role="group">
         <button type="button" class="btn btn-default">
-          <% @client.user_agents.browser_list.each do |ua| %>
+          <% @client.browsers.each do |ua| %>
           <h1><%= "#{ua}" %></h1>
           <small>Web Browser Breakdown</small>
           <% end %>
@@ -61,7 +61,7 @@
     <div class="btn-group btn-group-justified">
       <div class="btn-group" role="group">
         <button type="button" class="btn btn-default">
-          <% @client.user_agents.operating_system_list.each do |os| %>
+          <% @client.operating_systems.each do |os| %>
           <h3><%= "#{os}" %></h3>
           <% end %>
           <small>Operating System Breakdown</small>
@@ -69,7 +69,7 @@
       </div>
       <div class="btn-group" role="group">
         <button type="button" class="btn btn-default">
-          <% @client.resolutions.resolution_dimensions_across_requests.each do |res| %>
+          <% @client.dimensions.each do |res| %>
           <h3><%= "#{res}" %></h3>
            <% end %>
           <small>Screen Resolution Breakdown</small>
