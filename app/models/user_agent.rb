@@ -21,29 +21,24 @@ class UserAgent < ActiveRecord::Base
     def user_agents_across_requests
       all.group(:id).count.reduce({}) do |result, user_agent|
         result.merge!(find(user_agent.first) => user_agent.last)
-      end
+      end.sort_by{|k,v| -v}
     end
 
+    #MOVED TO CLIENT
     def user_agent_breakdown_by_browser
       user_agents_across_requests.reduce({}) do |result, user_agent_breakdown|
         result.merge!(user_agent_breakdown.first.browser => user_agent_breakdown.last)
       end
     end
 
+    #MOVED TO CLIENT
     def user_agent_breakdown_by_os
       user_agents_across_requests.reduce({}) do |result, user_agent_breakdown|
         result.merge!(user_agent_breakdown.first.operating_system => user_agent_breakdown.last)
       end
     end
 
-    def top_browser_across_requests
-      user_agent_breakdown_by_browser.first.first
-    end
-
-    def top_os_across_requests
-      user_agent_breakdown_by_os.first.first
-    end
-
+    #URL SPECIFIC?
     def top_user_agents
       user_agents_across_requests.reduce({}) do |result, ua|
         result.merge!("#{ua.first.operating_system} #{ua.first.browser}" => ua.last)

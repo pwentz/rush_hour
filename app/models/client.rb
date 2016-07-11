@@ -26,4 +26,25 @@ class Client < ActiveRecord::Base
       end
     end
   end
+
+    def top_browser_across_requests
+      payload_requests.most_frequent_list(:user_agent).first.first.browser
+    end
+
+    def top_operating_system_across_requests
+      payload_requests.most_frequent_list(:user_agent).first.first.operating_system
+    end
+
+    def user_agent_breakdown_by_os
+      payload_requests.most_frequent_list(:user_agent).map do |ua|
+        ua.first.operating_system
+      end
+    end
+
+    def user_agent_breakdown_by_browser
+      payload_requests.most_frequent_list(:user_agent).map do |ua|
+        ua.first.browser
+      end
+    end
+
 end
