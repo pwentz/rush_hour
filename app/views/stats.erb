@@ -1,30 +1,52 @@
-<div class="col-centered text-centered">
+<div class="container-fluid text-center">
 <h1><%= @client.identifier.capitalize %> Statistics</h1>
 
 <div class="" id="statistics">
-
-    <h3>Average Response Time</h3>
-      <p><%= @client.payload_requests.average_response_time %></p>
-    <h3>Maximum Response Time</h3>
-      <p><%= @client.payload_requests.max_response_time %></p>
-    <h3>Minimum Response Time</h3>
-      <p><%= @client.payload_requests.min_response_time %></p>
-    <h3>Most Frequent Request Type</h3>
-      <p><%= @client.request_types.most_frequent_request_type %></p>
-    <h3>All HTTP Verbs</h3>
-      <p><%= @client.request_types.http_verbs %></p>
-
-    <h3>All URLs By Rank</h3>
+  <div class="row btn-group btn-block" style=" display: block; width: 100%">
+    <div class="btn btn-default btn-md col-lg-3">
+      <h3><%= @client.payload_requests.average_response_time %></h3>
+      <small>Average Response Time</small>
+    </div>
+    <div class="btn btn-default btn-md col-lg-3">
+      <h3><%= @client.payload_requests.max_response_time %></h3>
+      <small>Maximum Response Time</small>
+    </div>
+    <div class="btn btn-default btn-md col-lg-3">
+      <h3><%= @client.payload_requests.min_response_time %></h3>
+      <small>Minimum Response Time</small>
+    </div>
+    <div class="btn btn-default btn-md col-lg-3">
+      <h3><%= @client.request_types.most_frequent_request_type %></h3>
+      <small>Most Frequent Request Type</small>
+    </div>
+  </div>
+  <div class="row btn-group btn-block" style=" display: block; width: 100%">
+  <div class="btn btn-default btn-md col-lg-3" style="width: 25%">
+      <% @client.request_types.http_verbs.each do |rt| %>
+      <h3><%= "#{rt}" %></h3>
+      <% end %>
+      <small>All HTTP Verbs</small>
+    </div>
+    <div class="btn btn-default btn-md col-lg-6" style="width: 40%">
       <% @client.urls.most_requested_urls.each do |url| %>
         <%= erb :'/shared/_requests_by_url', :locals => {:url => url} %>
       <% end %>
-
-    <h3>Web Browser Breakdown</h3>
-      <p><%= @client.user_agents.browser_list %></p>
-    <h3>Operating System Breakdown</h3>
-      <p><%= @client.user_agents.operating_system_list %></p>
-    <h3>Screen Resolution Breakdown</h3>
-      <p><%= @client.resolutions.resolution_dimensions_across_requests %></p>
-
+      <small>All URLs By Rank</small>
+    </div>
+    <div class="btn btn-default btn-md col-lg-3" style="width: 25%">
+      <h3><%= @client.user_agents.browser_list %></h3>
+      <small>Web Browser Breakdown</small>
+    </div>
+    </div>
+    <div class="row btn-group btn-block" style=" display: block; width: 100%">
+    <div class="btn btn-default btn-md col-lg-6">
+      <h3><%= @client.user_agents.operating_system_list %></h3>
+      <small>Operating System Breakdown</small>
+    </div>
+    <div class="btn btn-default btn-md col-lg-6">
+      <h3><%= @client.resolutions.resolution_dimensions_across_requests %></h3>
+      <small>Screen Resolution Breakdown</small>
+    </div>
+</div>
 </div>
 </div>

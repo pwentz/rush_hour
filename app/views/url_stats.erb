@@ -1,20 +1,44 @@
-<h1>Statistics for <%= @url.root_url + @url.path %></h1>
+<div class="container-fluid text-center"><h1>Statistics for <br><%= @url.root_url + @url.path %></h1>
 
-<div id="statistics">
+  <div id="statistics">
+    <div class="row btn-group">
+      <div class="btn btn-default btn-md col-lg-3">
+        <h1><%= @url.payload_requests.average_response_time %></h1>
+        <small>Average Response Time</small>
+      </div>
+      <div class="btn btn-default btn-md col-lg-3">
+        <h1><%= @url.payload_requests.max_response_time %></h1>
+        <small>Maximum Response Time</small>
+      </div>
+      <div class="btn btn-default btn-md col-lg-3">
+        <h1><%= @url.payload_requests.min_response_time %></h1>
+        <small>Minimum Response Time</small>
+      </div>
+      <div class="btn btn-default btn-md col-lg-3">
+        <% @url.request_types.http_verbs.each do |verb| %>
+        <h1><%= "#{verb}" %></h1>
+        <% end %>
+        <small>All HTTP Verbs</small>
+      </div>
+    </div>
+    <div class="btn btn-default btn-md col-md-12">
+      <h4><% @url.payload_requests.ordered_response_times.each do |rt| %>
+    <%= "#{rt} " %>
+    <% end %></h4>
+      <small>Response Times from Longest to Shortest</small>
+    </div>
+    <div class="btn btn-default btn-md">
+      <% @url.referrers.top_referrers.each do |referrer| %>
+      <h3><%= "#{referrer}\n" %></h3>
+      <% end %>
+      <small>Top Three Referrers</small>
+    </div>
+    <div class="btn btn-default btn-md">
+      <% @url.user_agents.top_user_agents.each do |ua| %>
+      <h3><%= "#{ua}\n" %></h3>
+      <% end %>
+      <small>Top Three User Agents</small>
+    </div>
 
-    <h3>Average Response Time</h3>
-      <p><%= @url.payload_requests.average_response_time %></p>
-    <h3>Maximum Response Time</h3>
-      <p><%= @url.payload_requests.max_response_time %></p>
-    <h3>Minimum Response Time</h3>
-      <p><%= @url.payload_requests.min_response_time %></p>
-    <h3>Response times from longest to shortest</h3>
-      <p><%= @url.payload_requests.ordered_response_times.to_s %>
-    <h3>All HTTP Verbs</h3>
-      <p><%= @url.request_types.http_verbs.to_s %></p>
-    <h3>Top three referrers</h3>
-      <p><%= @url.referrers.top_referrers.to_s %></p>
-    <h3>Top three user agents</h3>
-      <p><%= @url.user_agents.top_user_agents.to_s %></p>
-
+  </div>
 </div>
