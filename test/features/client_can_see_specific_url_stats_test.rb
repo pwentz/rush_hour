@@ -13,7 +13,7 @@ class ClientCanSeeSpecificUrlStatsTest < FeatureTest
     ip_address_create("102.42.91.123")
   end
 
-  def test_client_can_click_specific_url
+  def test_client_can_see_specific_url_statistics
     visit '/sources/jumpstartlab'
 
     within("#statistics") do
