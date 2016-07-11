@@ -13,3 +13,6 @@ span.glyphicon {
 .btn-md {
   margin: 1px;
 }
+.btn-group {
+  height: 100%
+}
