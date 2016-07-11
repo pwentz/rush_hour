@@ -6,6 +6,8 @@ Bundler.require
 require 'pathname'
 APP_ROOT = Pathname.new(File.expand_path('../../', __FILE__))
 
+ActiveSupport::Deprecation.silenced = true
+
 # require the controller(s)
 Dir[APP_ROOT.join('app', 'controllers', '*.rb')].each { |file| require file }
 
