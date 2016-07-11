@@ -27,31 +27,29 @@ class Client < ActiveRecord::Base
     end
   end
 
-    def top_browser_across_requests
-      payload_requests.most_frequent_list(:user_agent).first.first.browser
+    def browsers
+      payload_requests.most_frequent_list(:user_agent).keys.map(&:browser).uniq
     end
 
-    def top_operating_system_across_requests
-      payload_requests.most_frequent_list(:user_agent).first.first.operating_system
+    def operating_systems
+      payload_requests.most_frequent_list(:user_agent).keys.map(&:operating_system).uniq
     end
 
-    def user_agent_breakdown_by_os
-      payload_requests.most_frequent_list(:user_agent).map do |ua|
-        ua.first.operating_system
+    def most_frequent_request_type
+      payload_requests.most_frequent(:request_type).method_name
+    end
+
+    def all_http_verbs
+      payload_requests.most_frequent_list(:request_type).keys.map(&:method_name).uniq
+    end
+
+    def most_requested_urls
+      payload_requests.most_frequent_list(:url).keys
+    end
+
+    def dimensions
+      payload_requests.most_frequent_list(:resolution).keys.map do |resolution|
+        "#{resolution.width} x #{resolution.height}"
       end
     end
-
-    def user_agent_breakdown_by_browser
-      payload_requests.most_frequent_list(:user_agent).map do |ua|
-        ua.first.browser
-      end
-    end
-
-    #CONSIDER CREATING FOR CLIENT URL?
-    def top_three_referrers
-      payload_requests.most_frequent_list(:referrers).map do |referrer|
-        referrer.referrer
-      end.first(3)
-    end
-
 end

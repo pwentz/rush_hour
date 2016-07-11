@@ -55,56 +55,58 @@ class UrlTest < Minitest::Test
   end
 
   def test_response_time_stats_for_url
-    url_one = Url.create(root_url: "http://jumpstartlab.com", path: "/blog")
+    url = url_create("http://jumpstartlab.com",  "/blog")
 
-    dummy_payload(:url_id, url_one.id, 5)
+    dummy_payload(:url_id, url.id, 5)
 
-    assert_equal 40, url_one.payload_requests.max_response_time
-    assert_equal 36, url_one.payload_requests.min_response_time
-    assert_equal [40, 39, 38, 37, 36], url_one.payload_requests.ordered_response_times
-    assert_equal 38, url_one.payload_requests.average_response_time
-  end
-
-  def test_http_verbs_for_url
-    url_one = Url.create(root_url: "http://jumpstartlab.com", path: "/blog")
-    rt = RequestType.create(method_name: "GET")
-    rt_two = RequestType.create(method_name: "POST")
-    dummy_payload(:request_type_id, rt.id)
-    dummy_payload(:request_type_id, rt_two.id)
-
-    assert_equal ["GET", "POST"], url_one.request_types.http_verbs
+    assert_equal 40, url.payload_requests.max_response_time
+    assert_equal 36, url.payload_requests.min_response_time
+    assert_equal [40, 39, 38, 37, 36], url.payload_requests.ordered_response_times
+    assert_equal 38, url.payload_requests.average_response_time
   end
 
   def test_top_referrers_per_url
-    url_one = Url.create(root_url: "http://jumpstartlab.com", path: "/blog")
-    ref_one = Referrer.create(referrer: "http://www.google.com")
-    ref_two = Referrer.create(referrer: "http://www.turing.io")
-    ref_three = Referrer.create(referrer: "http://www.bing.com")
-    ref_four = Referrer.create(referrer: "http://www.jumpstartlab.com")
+    url = url_create("http://jumpstartlab.com", "/blog")
+    ref_one = referrer_create("http://www.google.com")
+    ref_two = referrer_create("http://www.turing.io")
+    ref_three = referrer_create("http://www.bing.com")
+    ref_four = referrer_create("http://www.jumpstartlab.com")
     dummy_payload(:referrer_id, ref_one.id, 2)
     dummy_payload(:referrer_id, ref_two.id, 3)
     dummy_payload(:referrer_id, ref_three.id, 4)
     dummy_payload(:referrer_id, ref_four.id)
 
-    assert_equal "http://www.bing.com", url_one.referrers.top_referrers.first
-    assert_equal "http://www.turing.io", url_one.referrers.top_referrers[1]
-    assert_equal "http://www.google.com", url_one.referrers.top_referrers.last
+    assert_equal "http://www.bing.com", url.top_three_referrers.first
+    assert_equal "http://www.turing.io", url.top_three_referrers[1]
+    assert_equal "http://www.google.com", url.top_three_referrers.last
   end
 
   def test_top_three_user_agents_by_url
-    url_one = Url.create(root_url: "http://jumpstartlab.com", path: "/blog")
-    ua_one = UserAgent.create(operating_system: "OS X 10.8.2", browser: "Chrome")
-    ua_two = UserAgent.create(operating_system: "OS X 10.4.2", browser: "Firefox")
-    ua_three = UserAgent.create(operating_system: "OS X 10.8.2", browser: "Safari")
-    ua_four = UserAgent.create(operating_system: "OS X 8.8.2", browser: "IE9")
+    url = url_create("http://jumpstartlab.com", "/blog")
+    ua_one = user_agent_create("OS X 10.8.2", "Chrome")
+    ua_two = user_agent_create("OS X 10.4.2", "Firefox")
+    ua_three = user_agent_create("OS X 10.8.2", "Safari")
+    ua_four = user_agent_create("OS X 8.8.2", "IE9")
     dummy_payload(:user_agent_id, ua_one.id, 2)
     dummy_payload(:user_agent_id, ua_two.id, 3)
     dummy_payload(:user_agent_id, ua_three.id, 4)
     dummy_payload(:user_agent_id, ua_four.id)
 
-    assert_equal "OS X 10.8.2 Safari", url_one.user_agents.top_user_agents.first
-    assert_equal "OS X 10.4.2 Firefox", url_one.user_agents.top_user_agents[1]
-    assert_equal "OS X 10.8.2 Chrome", url_one.user_agents.top_user_agents.last
+    assert_equal "OS X 10.8.2 Safari", url.top_three_user_agents.first
+    assert_equal "OS X 10.4.2 Firefox", url.top_three_user_agents[1]
+    assert_equal "OS X 10.8.2 Chrome", url.top_three_user_agents.last
+  end
+
+  def test_http_verbs_used
+    url = url_create("http://jumpstartlab.com", "/blog")
+    rt_one = request_type_create("GET")
+    rt_two = request_type_create("POST")
+    dummy_payload(:request_type_id, rt_one.id, 2)
+    dummy_payload(:request_type_id, rt_two.id, 3)
+
+    assert url.http_verbs.any?{|request_name| request_name == "GET"}
+    assert url.http_verbs.any?{|request_name| request_name == "POST"}
+    assert_equal 2, url.http_verbs.count
   end
 
 end

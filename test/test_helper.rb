@@ -68,4 +68,12 @@ module TestHelpers
     IPAddress.create(ip_address: ip_address)
   end
 
+  def client_create(identifier, root_url)
+    Client.create(identifier: identifier, root_url: root_url)
+  end
+
+  def client_to_payloads(client)
+    client.payload_requests << PayloadRequest.all
+  end
+
 end
