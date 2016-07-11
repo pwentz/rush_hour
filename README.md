@@ -68,3 +68,7 @@ Because the requirements for this project are lengthy and complex, we've broken 
 ## Appendix
 
 The full project instructions can be found [here](https://github.com/turingschool/curriculum/blob/master/source/projects/rush_hour.md).
+
+## Post-Project Group Retro
+
+our group retro markdown can be found [here](https://gist.github.com/zackforbing/abb77a9b647402fa199c3b7335eef116).
