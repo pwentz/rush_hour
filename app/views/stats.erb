@@ -28,7 +28,7 @@
       <small>All HTTP Verbs</small>
     </div>
     <div class="btn btn-default btn-md col-lg-6" style="width: 40%">
-      <% @client.urls.most_requested_urls.each do |url| %>
+      <% @client.payload_requests.most_requested_urls.each do |url| %>
         <%= erb :'/shared/_requests_by_url', :locals => {:url => url} %>
       <% end %>
       <small>All URLs By Rank</small>
