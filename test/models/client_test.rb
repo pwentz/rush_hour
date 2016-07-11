@@ -41,4 +41,20 @@ class ClientTest < Minitest::Test
    refute client_two.valid?
    assert_equal 1, Client.count
   end
+
+  def test_user_agent_breakdown_across_requests
+    valid_attributes = {identifier: "jumpstartlab", root_url: "http://jumpstartlab.com"}
+    client = Client.create(valid_attributes)
+    ua_one = UserAgent.create(operating_system: "OS X 10.8.2", browser: "Chrome")
+    ua_two = UserAgent.create(operating_system: "OS X 10.4.2", browser: "Firefox")
+    ua_three = UserAgent.create(operating_system: "OS X 10.8.2", browser: "Safari")
+
+    dummy_payload(:user_agent_id, ua_one.id)
+    dummy_payload(:user_agent_id, ua_two.id, 3)
+    dummy_payload(:user_agent_id, ua_three.id, 4)
+    client.payload_requests << PayloadRequest.all
+
+    assert_equal "Safari", client.top_browser_across_requests
+    assert_equal "OS X 10.8.2", client.top_operating_system_across_requests
+  end
 end

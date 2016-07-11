@@ -42,17 +42,4 @@ class UserAgentTest < Minitest::Test
     assert_equal 1, UserAgent.count
   end
 
-  def test_user_agent_breakdown_across_requests
-    ua_one = UserAgent.create(operating_system: "OS X 10.8.2", browser: "Chrome")
-    ua_two = UserAgent.create(operating_system: "OS X 10.4.2", browser: "Firefox")
-    ua_three = UserAgent.create(operating_system: "OS X 10.8.2", browser: "Safari")
-
-    dummy_payload(:user_agent_id, ua_one.id)
-    dummy_payload(:user_agent_id, ua_two.id, 3)
-    dummy_payload(:user_agent_id, ua_three.id, 4)
-
-    assert_equal "Safari", UserAgent.top_browser_across_requests
-    assert_equal "OS X 10.8.2", UserAgent.top_os_across_requests
-  end
-
 end

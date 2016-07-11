@@ -1,6 +1,7 @@
 require_relative '../test_helper'
 
 class ClientCanSeeSpecificUrlStatsTest < FeatureTest
+  include TestHelpers
   def setup
     client = Client.create(root_url: "http://jumpstartlab.com", identifier: "jumpstartlab")
     dummy_payload(:client_id, client.id, 4)
