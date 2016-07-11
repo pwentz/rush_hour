@@ -19,7 +19,9 @@ class UserAgent < ActiveRecord::Base
     end
 
     def user_agents_across_requests
-      PayloadRequest.group(:user_agent).count.sort_by{|k,v| -v}.to_h
+      all.group(:id).count.reduce({}) do |result, user_agent|
+        result.merge!(find(user_agent.first) => user_agent.last)
+      end
     end
 
     def user_agent_breakdown_by_browser
