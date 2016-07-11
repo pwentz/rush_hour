@@ -48,5 +48,6 @@ class ClientCanSeeAllUrlStatsTest < FeatureTest
     end
 
     assert_equal "/sources/jumpstartlab/urls/blog", current_path
+    assert has_content?("Statistics for http://jumpstartlab.com/blog")
   end
 end
