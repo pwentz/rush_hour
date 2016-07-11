@@ -14,8 +14,19 @@ class ClientCanSeeAllUrlStatsTest < FeatureTest
     ip_address_create("102.42.91.123")
   end
 
-  def test_client_can_see_their_statistics
+  def test_client_page_displays_client_name
+    visit("/sources/jumpstartlab")
 
+    assert page.has_content?("Jumpstartlab Statistics")
+  end
+
+  def test_page_renders_with_css
+    visit("/sources/jumpstartlab")
+
+    assert page.has_css?("body")
+  end
+
+  def test_client_can_see_their_statistics
     visit '/sources/jumpstartlab'
 
     within("#statistics") do
