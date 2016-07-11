@@ -47,4 +47,11 @@ class Client < ActiveRecord::Base
       end
     end
 
+    #CONSIDER CREATING FOR CLIENT URL?
+    def top_three_referrers
+      payload_requests.most_frequent_list(:referrers).map do |referrer|
+        referrer.referrer
+      end.first(3)
+    end
+
 end

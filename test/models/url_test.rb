@@ -88,7 +88,7 @@ class UrlTest < Minitest::Test
 
     assert_equal "http://www.bing.com", url_one.referrers.top_referrers.first
     assert_equal "http://www.turing.io", url_one.referrers.top_referrers[1]
-    assert_equal "http://www.jumpstartlab.com", url_one.referrers.top_referrers.last
+    assert_equal "http://www.google.com", url_one.referrers.top_referrers.last
   end
 
   def test_top_three_user_agents_by_url

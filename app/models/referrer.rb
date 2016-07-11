@@ -10,7 +10,7 @@ class Referrer < ActiveRecord::Base
 
   class << self
     def top_referrers
-      find_top_three(:referrer).keys
+      find_top_three(:referrer).keys.first(3)
     end
 
     def find_top_three(attribute)
